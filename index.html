@@ -8,7 +8,14 @@
 </head>
 <body>
 
-    <h1>Testing ajax</h1>
+    <h1>Files</h1>
+    <select name="file" id="files"></select>
+
+    <hr>
+    <h1>File contents</h1>
+    <div class="myBox">
+       Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam, nisi necessitatibus dicta aspernatur culpa id laudantium, tempora obcaecati placeat qui odio suscipit aut debitis. Consectetur aspernatur consequatur distinctio corporis est!
+    </div>
     
 </body>
 
@@ -29,17 +36,54 @@
         };
 
         xhr.onerror = function() {
-        alert("Запрос не удался");
         talk_to_server(fun_name);
         };
 
         return xhr.responseText;
     }
 
-    let answer = talk_to_server("hello");
+    let answer = talk_to_server("init");
+
+    let selectbox = document.getElementById("files");
+
+    let files = talk_to_server("getfiles");
+    
+
 
     console.log(answer);
 
 
 </script>
+
+<style>
+
+    .myBox {
+    border: none;
+    padding: 5px;
+    font: 24px/36px sans-serif;
+    width: 800px;
+    height: 200px;
+    overflow: scroll;
+    }
+
+    ::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+    }
+
+    ::-webkit-scrollbar-track {
+    border: 1px solid yellowgreen;
+    border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+    background: yellowgreen;  
+    border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+    background: #88ba1c;  
+    }
+
+</style>
 </html>
