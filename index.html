@@ -9,7 +9,7 @@
 <body>
 
     <h1>Files</h1>
-    <select name="file" id="files"></select>
+    <select onchange="getText(this)" name="file" id="files"></select>
 
     <hr>
     <h1>File contents</h1>
@@ -21,36 +21,49 @@
 
 <script>
 
-    function talk_to_server(fun_name)
-    {
-        let xhr = new XMLHttpRequest();
-
-        xhr.open('GET', fun_name+".php");
-        xhr.send();
-        xhr.onload = function() {
-            if (xhr.status != 200) { 
-                alert(`error ${xhr.status}: ${xhr.statusText}`);
-            } else { 
-                return xhr.responseText;
-            }
-        };
-
-        xhr.onerror = function() {
-        talk_to_server(fun_name);
-        };
-
-        return xhr.responseText;
+    function getText(sel){
+        //console.info( arguments );
+        alert(sel.options[sel.selectedIndex].text);
     }
 
-    let answer = talk_to_server("init");
+    function putFiles(files){
+        var selectbox = document.getElementById('files');
 
-    let selectbox = document.getElementById("files");
+        for (const key of Object.keys(files)) {
+            console.log(files[key]);
+            selectbox.innerHTML = selectbox.innerHTML +
+                '<option value="' + key     + '">' + files[key] + '</option>';
+        }
 
-    let files = talk_to_server("getfiles");
+    }
+
+    let files;
+
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', "init.php");
+    xhr.send();
+    xhr.onload = function() {
+        if (xhr.status != 200) { 
+            alert(`error ${xhr.status}: ${xhr.statusText}`);
+        } else { 
+            alert("load has finished");
+        }
+    };
+
+    let xhr2 = new XMLHttpRequest();
+    xhr2.open('GET', "getfiles.php");
+    xhr2.send();
+    xhr2.onload = function() {
+        if (xhr2.status != 200) { 
+            alert(`error ${xhr2.status}: ${xhr2.statusText}`);
+        } else { 
+            console.log(JSON.parse(xhr2.responseText)); 
+            putFiles(JSON.parse(xhr2.responseText));
+        }
+    };
+
+
     
-
-
-    console.log(answer);
 
 
 </script>
