@@ -13,7 +13,7 @@
 
     <hr>
     <h1>File contents</h1>
-    <div class="myBox">
+    <div id ="mybox" class="myBox">
        Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam, nisi necessitatibus dicta aspernatur culpa id laudantium, tempora obcaecati placeat qui odio suscipit aut debitis. Consectetur aspernatur consequatur distinctio corporis est!
     </div>
     
@@ -22,8 +22,19 @@
 <script>
 
     function getText(sel){
-        //console.info( arguments );
-        alert(sel.options[sel.selectedIndex].text);
+        let file = sel.options[sel.selectedIndex].text;
+        let xhr = new XMLHttpRequest();
+        console.log("hello");
+        xhr.open('GET', "getfile.php/?file="+file);
+        xhr.send();
+        xhr.onload = function() {
+            if (xhr.status != 200) { 
+                alert(`error ${xhr.status}: ${xhr.statusText}`);
+            } else { 
+                let mb = document.getElementById('mybox')
+                mb.innerText=xhr.responseText;
+            }
+        };
     }
 
     function putFiles(files){
@@ -34,9 +45,7 @@
             selectbox.innerHTML = selectbox.innerHTML +
                 '<option value="' + key     + '">' + files[key] + '</option>';
         }
-
     }
-
     let files;
 
     let xhr = new XMLHttpRequest();
@@ -61,10 +70,6 @@
             putFiles(JSON.parse(xhr2.responseText));
         }
     };
-
-
-    
-
 
 </script>
 
