@@ -11,6 +11,12 @@
     <h1>Files</h1>
     <select onchange="getText(this)" name="file" id="files"></select>
 
+    <div>
+        <input id="value_id" type="text">
+        <h1 id="value_value">Please input id in range of 1 to 1000000</h1>
+        <button onclick="getValue()">Get value</button>
+    </div>
+
     <hr>
     <h1>File contents</h1>
     <div id ="mybox" class="myBox">
@@ -21,10 +27,25 @@
 
 <script>
 
+    function getValue(){
+        let id = document.getElementById("value_id").value;
+        let value = document.getElementById("value_value");
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', "getvalue.php/?id="+id);
+        xhr.send();
+        xhr.onload = function() {
+            if (xhr.status != 200) { 
+                alert(`error ${xhr.status}: ${xhr.statusText}`);
+            } else { 
+
+                value.innerText=xhr.responseText;
+            }
+        };
+    }
+
     function getText(sel){
         let file = sel.options[sel.selectedIndex].text;
         let xhr = new XMLHttpRequest();
-        console.log("hello");
         xhr.open('GET', "getfile.php/?file="+file);
         xhr.send();
         xhr.onload = function() {
@@ -74,6 +95,16 @@
 </script>
 
 <style>
+
+    #value_id {
+        margin: 26px;
+    }
+
+    button {
+        width: 199px;
+        height: 35px;
+        background-color: rgba(137, 43, 226, 0.144);
+    }
 
     .myBox {
     border: none;
