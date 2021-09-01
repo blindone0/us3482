@@ -37,7 +37,6 @@
             if (xhr.status != 200) { 
                 alert(`error ${xhr.status}: ${xhr.statusText}`);
             } else { 
-
                 value.innerText=xhr.responseText;
             }
         };
@@ -64,7 +63,7 @@
         for (const key of Object.keys(files)) {
             console.log(files[key]);
             selectbox.innerHTML = selectbox.innerHTML +
-                '<option value="' + key     + '">' + files[key] + '</option>';
+                '<option value="' + key + '">' + files[key] + '</option>';
         }
     }
     let files;

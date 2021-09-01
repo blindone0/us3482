@@ -25,12 +25,12 @@ try{
     echo $ex->getMessage();
 }
     
-// foreach(range(1, 1000000) as $id){
-//     print("gello");
-//     $dbh->exec("INSERT INTO contest.us3482 VALUES ($id, $value)") or die(print_r($dbh->errorInfo(), true));
-//     $value = getSumOfDigits($value);
-//     $value = gmp_pow($value, 2);
-//     $value = gmp_add($value, 1);
-// } 
+foreach(range(1, 1000000) as $id){
+    print("gello");
+    $dbh->exec("INSERT INTO contest.us3482 VALUES ($id, $value)") or die(print_r($dbh->errorInfo(), true));
+    $value = getSumOfDigits($value);
+    $value = gmp_pow($value, 2);
+    $value = gmp_add($value, 1);
+} 
 
 $sqlScript = file('contents.sql');
